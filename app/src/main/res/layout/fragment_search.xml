@@ -25,9 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search_hint"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="3dp"
+            app:boxStrokeColor="@color/search_box_stroke"
+            app:hintTextColor="@color/secondary_light"
+            app:startIconDrawable="@drawable/ic_search_gradient"
             app:endIconMode="clear_text"
+            app:endIconTint="@color/secondary_light"
             app:hintAnimationEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText

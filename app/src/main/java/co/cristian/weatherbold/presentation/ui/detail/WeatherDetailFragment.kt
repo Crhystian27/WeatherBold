@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -41,12 +41,23 @@ class WeatherDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
+        setupLocationName()
         setupRecyclerView()
         setupRetryButton()
         observeWeatherDetail()
         
         // Load weather data
         viewModel.getWeatherDetail(args.locationName)
+    }
+
+    private fun setupLocationName() {
+        // Display location name with country if available
+        val locationDisplay = if (args.locationCountry != null) {
+            "${args.locationName}, ${args.locationCountry}"
+        } else {
+            args.locationName
+        }
+        binding.locationNameText.text = locationDisplay
     }
 
     private fun setupRecyclerView() {
@@ -73,46 +84,40 @@ class WeatherDetailFragment : Fragment() {
     }
 
     private fun showLoading() {
-        binding.apply {
-            loadingProgress.isVisible = true
-            contentContainer.isVisible = false
-            errorLayout.isVisible = false
-        }
+        binding.shimmerLayout.root.visibility = View.VISIBLE
+        binding.contentContainer.visibility = View.GONE
+        binding.errorLayout.visibility = View.GONE
     }
 
     private fun showWeatherDetail(detail: WeatherDetail) {
-        binding.apply {
-            loadingProgress.isVisible = false
-            contentContainer.isVisible = true
-            errorLayout.isVisible = false
+        binding.shimmerLayout.root.visibility = View.GONE
+        binding.contentContainer.visibility = View.VISIBLE
+        binding.errorLayout.visibility = View.GONE
 
-            // Current weather using WeatherFormatter
-            val current = detail.currentWeather
-            val ctx = requireContext()
-            temperatureText.text = WeatherFormatter.formatTemperature(ctx, current.tempCelsius)
-            conditionText.text = current.conditionText
-            feelsLikeText.text = WeatherFormatter.formatFeelsLike(ctx, current.feelsLikeCelsius)
-            windText.text = WeatherFormatter.formatWind(ctx, current.windKph, current.windDirection)
-            humidityText.text = WeatherFormatter.formatHumidity(ctx, current.humidity)
-            visibilityText.text = WeatherFormatter.formatVisibility(ctx, current.visibilityKm)
+        // Current weather using WeatherFormatter
+        val current = detail.currentWeather
+        val ctx = requireContext()
+        binding.temperatureText.text = WeatherFormatter.formatTemperature(ctx, current.tempCelsius)
+        binding.conditionText.text = current.conditionText
+        binding.feelsLikeText.text = WeatherFormatter.formatFeelsLike(ctx, current.feelsLikeCelsius)
+        binding.windText.text = WeatherFormatter.formatWind(ctx, current.windKph, current.windDirection)
+        binding.humidityText.text = WeatherFormatter.formatHumidity(ctx, current.humidity)
+        binding.visibilityText.text = WeatherFormatter.formatVisibility(ctx, current.visibilityKm)
 
-            // Load weather icon with Coil (URL already has https: protocol from mapper)
-            weatherIcon.load(current.conditionIcon) {
-                crossfade(true)
-            }
-
-            // 3-day forecast
-            forecastAdapter.submitList(detail.threeDayForecast)
+        // Load weather icon with Coil (URL already has https: protocol from mapper)
+        binding.weatherIcon.load(current.conditionIcon) {
+            crossfade(true)
         }
+
+        // 3-day forecast
+        forecastAdapter.submitList(detail.threeDayForecast)
     }
 
     private fun showError(message: String) {
-        binding.apply {
-            loadingProgress.isVisible = false
-            contentContainer.isVisible = false
-            errorLayout.isVisible = true
-            errorMessage.text = message
-        }
+        binding.shimmerLayout.root.visibility = View.GONE
+        binding.contentContainer.visibility = View.GONE
+        binding.errorLayout.visibility = View.VISIBLE
+        binding.errorMessage.text = message
         
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }

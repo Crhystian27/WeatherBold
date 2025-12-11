@@ -173,6 +173,7 @@ dependencies {
 
     // Image Loading
     implementation(libs.coil)
+    implementation(libs.shimmer)
 
     // Testing
     testImplementation(libs.junit)

@@ -10,13 +10,19 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.WeatherBold.AppBarOverlay">
+        android:fitsSystemWindows="true"
+        android:theme="@style/Theme.WeatherBold.AppBarOverlay"
+        android:background="@drawable/gradient_primary">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:gravity="center_vertical"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetStartWithNavigation="0dp"
+            app:titleMarginStart="0dp"
+            app:titleTextColor="@color/white"
             app:popupTheme="@style/Theme.WeatherBold.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -1,17 +1,39 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+    <!-- Base application theme - Light Mode -->
     <style name="Theme.WeatherBold" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/primary_light</item>
+        <item name="colorPrimaryVariant">@color/primary_variant_light</item>
+        <item name="colorOnPrimary">@color/text_on_primary_light</item>
+        
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/secondary_light</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant_light</item>
+        <item name="colorOnSecondary">@color/text_on_secondary_light</item>
+        
+        <!-- Background colors -->
+        <item name="android:colorBackground">@color/background_light</item>
+        <item name="colorSurface">@color/surface_light</item>
+        <item name="colorOnSurface">@color/text_primary_light</item>
+        <item name="colorOnBackground">@color/text_primary_light</item>
+        
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">@color/primary_variant_light</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/surface_light</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/text_primary_light</item>
+        <item name="android:textColorSecondary">@color/text_secondary_light</item>
+        
+        <!-- Card colors -->
+        <item name="cardBackgroundColor">@color/card_background_light</item>
+        
+        <!-- Divider color -->
+        <item name="android:listDivider">@drawable/divider_light</item>
     </style>
 
     <style name="Theme.WeatherBold.NoActionBar">
@@ -19,7 +41,43 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.WeatherBold.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.WeatherBold.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        <item name="colorPrimary">@color/primary_light</item>
+        <item name="colorOnPrimary">@color/text_on_primary_light</item>
+    </style>
 
-    <style name="Theme.WeatherBold.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.WeatherBold.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+    
+    <!-- Card Style with Elevation -->
+    <style name="WeatherCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/card_background_light</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="contentPadding">@dimen/spacing_medium</item>
+    </style>
+    
+    <!-- Button Styles -->
+    <style name="WeatherButton.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/primary_light</item>
+        <item name="android:textColor">@color/text_on_primary_light</item>
+    </style>
+    
+    <style name="WeatherButton.Secondary" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/secondary_light</item>
+        <item name="android:textColor">@color/secondary_light</item>
+    </style>
+    
+    <!-- Text Styles -->
+    <style name="TextAppearance.WeatherBold.Headline" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/text_primary_light</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+    <style name="TextAppearance.WeatherBold.Body" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/text_primary_light</item>
+    </style>
+    
+    <style name="TextAppearance.WeatherBold.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/text_secondary_light</item>
+    </style>
 </resources>

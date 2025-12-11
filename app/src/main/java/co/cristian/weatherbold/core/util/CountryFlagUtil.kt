@@ -12,14 +12,16 @@ object CountryFlagUtil {
      * Get flag URL from CDN
      * @param countryName Country name in English (as returned by WeatherAPI)
      * @param size Image size (use ApiConstants.FlagCdn.Sizes)
+     * @param format Image format (use ApiConstants.FlagCdn.Formats)
      * @return Flag URL or null if country not mapped
      */
     fun getCountryFlagUrl(
         countryName: String,
-        size: String = ApiConstants.FlagCdn.Sizes.NORMAL
+        size: String = ApiConstants.FlagCdn.Sizes.NORMAL,
+        format: String = ApiConstants.FlagCdn.Formats.PNG
     ): String? {
         val isoCode = getCountryIsoCode(countryName) ?: return null
-        return ApiConstants.FlagCdn.buildFlagUrl(isoCode, size)
+        return ApiConstants.FlagCdn.buildFlagUrl(isoCode, size, format)
     }
 
     /**

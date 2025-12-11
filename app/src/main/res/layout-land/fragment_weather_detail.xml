@@ -13,15 +13,13 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_medium">
 
-        <!-- Loading State -->
-        <ProgressBar
-            android:id="@+id/loading_progress"
-            android:layout_width="wrap_content"
+        <!-- Loading State with Shimmer -->
+        <include
+            android:id="@+id/shimmer_layout"
+            layout="@layout/shimmer_weather_detail"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
@@ -41,6 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/spacing_small"
                 android:orientation="vertical">
 
@@ -55,6 +54,17 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="@dimen/spacing_large">
+
+                        <!-- Location Name -->
+                        <TextView
+                            android:id="@+id/location_name_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/spacing_medium"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="@dimen/text_size_large"
+                            android:textStyle="bold"
+                            tools:text="Bogotá, Colombia" />
 
                         <!-- Weather Icon & Temperature -->
                         <LinearLayout
@@ -159,6 +169,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/spacing_small"
                 android:orientation="vertical">
 

@@ -1,10 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- Brand Colors - Gradient Base -->
+    <color name="brand_primary">#0f186f</color>
+    <color name="brand_secondary">#ff2947</color>
+    
+    <!-- Light Theme Colors -->
+    <color name="primary_light">#0f186f</color>
+    <color name="primary_variant_light">#070d3d</color>
+    <color name="secondary_light">#ff2947</color>
+    <color name="secondary_variant_light">#cc1f39</color>
+    
+    <!-- Light Theme Surface Colors -->
+    <color name="background_light">#F5F5F5</color>
+    <color name="surface_light">#FFFFFF</color>
+    <color name="surface_variant_light">#F8F9FA</color>
+    <color name="card_background_light">#FFFFFF</color>
+    
+    <!-- Light Theme Text Colors -->
+    <color name="text_primary_light">#1A1A1A</color>
+    <color name="text_secondary_light">#666666</color>
+    <color name="text_on_primary_light">#FFFFFF</color>
+    <color name="text_on_secondary_light">#FFFFFF</color>
+    
+    <!-- Dark Theme Colors -->
+    <color name="primary_dark">#3d4ab8</color>
+    <color name="primary_variant_dark">#0f186f</color>
+    <color name="secondary_dark">#ff5c75</color>
+    <color name="secondary_variant_dark">#ff2947</color>
+    
+    <!-- Dark Theme Surface Colors -->
+    <color name="background_dark">#121212</color>
+    <color name="surface_dark">#1E1E1E</color>
+    <color name="surface_variant_dark">#2C2C2C</color>
+    <color name="card_background_dark">#252525</color>
+    
+    <!-- Dark Theme Text Colors -->
+    <color name="text_primary_dark">#E8E8E8</color>
+    <color name="text_secondary_dark">#B3B3B3</color>
+    <color name="text_on_primary_dark">#FFFFFF</color>
+    <color name="text_on_secondary_dark">#FFFFFF</color>
+    
+    <!-- Gradient Colors -->
+    <color name="gradient_start">#ff2947</color>
+    <color name="gradient_middle">#7a1e5b</color>
+    <color name="gradient_end">#0f186f</color>
+    
+    <!-- Accent Colors -->
+    <color name="accent_blue">#4A90E2</color>
+    <color name="accent_success">#4CAF50</color>
+    <color name="accent_warning">#FFC107</color>
+    <color name="accent_error">#F44336</color>
+    
+    <!-- Divider Colors -->
+    <color name="divider_light">#E0E0E0</color>
+    <color name="divider_dark">#3A3A3A</color>
+    
+    <!-- Overlay Colors -->
+    <color name="overlay_light">#1A000000</color>
+    <color name="overlay_dark">#33FFFFFF</color>
+    
+    <!-- Legacy Colors (for compatibility) -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

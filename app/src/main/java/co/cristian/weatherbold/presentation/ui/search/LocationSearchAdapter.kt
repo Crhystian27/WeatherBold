@@ -49,21 +49,28 @@ class LocationSearchAdapter(
                 // Show progress bar for flag
                 val flagUrl = location.getCountryFlagUrl()
                 
+                Log.d("LocationAdapter", "═══════════════════════════════════════")
+                Log.d("LocationAdapter", "📍 Location: ${location.name}, ${location.region}")
+                Log.d("LocationAdapter", "🌍 Country: '${location.country}'")
+                Log.d("LocationAdapter", "🔗 Flag URL: $flagUrl")
+                
                 if (flagUrl == null) {
                     loadingIndicator.isVisible = false
                     locationIcon.isVisible = true
-                    locationIcon.setImageResource(R.drawable.avatar_12)
-                    Log.w("LocationAdapter", "No flag URL for: ${location.country}")
+                    locationIcon.setImageResource(R.drawable.ic_weather_gradient)
+                    Log.w("LocationAdapter", "⚠️ No flag URL generated for country: '${location.country}'")
+                    Log.w("LocationAdapter", "   Check CountryFlagUtil mapping")
                 } else {
                     loadingIndicator.isVisible = true
                     locationIcon.isVisible = false
 
-                    Log.d("LocationAdapter", "Loading: $flagUrl")
+                    Log.d("LocationAdapter", "🔄 Attempting to load flag from: $flagUrl")
+                    Log.d("LocationAdapter", "   Using Coil ImageLoader...")
                     
                     locationIcon.load(flagUrl) {
                         crossfade(true)
-                        placeholder(R.drawable.avatar_12)
-                        error(R.drawable.avatar_12)
+                        placeholder(R.drawable.ic_weather_gradient)
+                        error(R.drawable.ic_weather_gradient)
                         listener(
                             onSuccess = { _, _ ->
                                 // Ensure minimum 600ms loading visibility
@@ -74,7 +81,9 @@ class LocationSearchAdapter(
                                     itemView.handler?.postDelayed({
                                         binding.loadingIndicator.isVisible = false
                                         binding.locationIcon.isVisible = true
-                                        Log.d("LocationAdapter", "Success: ${location.country}")
+                                        Log.d("LocationAdapter", "✅ SUCCESS! Flag loaded for: ${location.country}")
+                                        Log.d("LocationAdapter", "   URL: $flagUrl")
+                                        Log.d("LocationAdapter", "   Time: ${System.currentTimeMillis() - startTime}ms")
                                     }, remainingDelay)
                                 }
                             },
@@ -87,7 +96,14 @@ class LocationSearchAdapter(
                                     itemView.handler?.postDelayed({
                                         binding.loadingIndicator.isVisible = false
                                         binding.locationIcon.isVisible = true
-                                        Log.e("LocationAdapter", "Error: ${error.throwable.message}")
+                                        Log.e("LocationAdapter", "❌ ERROR! Failed to load flag for: ${location.country}")
+                                        Log.e("LocationAdapter", "   URL: $flagUrl")
+                                        Log.e("LocationAdapter", "   Error Type: ${error.throwable.javaClass.simpleName}")
+                                        Log.e("LocationAdapter", "   Error Message: ${error.throwable.message}")
+                                        Log.e("LocationAdapter", "   Cause: ${error.throwable.cause?.message}")
+                                        Log.e("LocationAdapter", "   Time: ${System.currentTimeMillis() - startTime}ms")
+                                        Log.e("LocationAdapter", "   Stack trace:")
+                                        error.throwable.printStackTrace()
                                     }, remainingDelay)
                                 }
                             }

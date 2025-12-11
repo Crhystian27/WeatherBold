@@ -25,7 +25,6 @@ object ApiConstants {
     const val SEARCH_DEBOUNCE_DELAY = 600L
     
     // Forecast
-    const val MAX_FORECAST_DAYS = 7
     const val DEFAULT_FORECAST_DAYS = 3
     
     // Country Flags CDN
@@ -36,11 +35,21 @@ object ApiConstants {
             const val NORMAL = "h80"
         }
 
+        object Formats {
+            const val WEBP = "webp"
+            const val PNG = "png"
+        }
+
         /**
          * Example: buildFlagUrl("CO", "h80") → "https://flagcdn.com/h80/co.webp"
+         * Example: buildFlagUrl("CO", "h80", "png") → "https://flagcdn.com/h80/co.png"
          */
-        fun buildFlagUrl(isoCode: String, size: String = Sizes.NORMAL): String {
-            return "$BASE_URL$size/${isoCode.lowercase()}.webp"
+        fun buildFlagUrl(
+            isoCode: String, 
+            size: String = Sizes.NORMAL,
+            format: String = Formats.WEBP
+        ): String {
+            return "$BASE_URL$size/${isoCode.lowercase()}.$format"
         }
     }
 }

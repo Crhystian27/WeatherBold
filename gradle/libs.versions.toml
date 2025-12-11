@@ -8,6 +8,7 @@ espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.12.0"
 coil = "2.5.0"
+shimmer = "0.5.0"
 recyclerview = "1.3.0"
 constraintlayout = "2.1.4"
 lifecycleLivedataKtx = "2.6.2"
@@ -47,6 +48,7 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 
 # Image Loading
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+shimmer = { group = "com.facebook.shimmer", name = "shimmer", version.ref = "shimmer" }
 
 # Networking
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
