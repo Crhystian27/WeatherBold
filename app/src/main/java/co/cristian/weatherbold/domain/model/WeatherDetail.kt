@@ -1,47 +1,37 @@
 package co.cristian.weatherbold.domain.model
 
-
+/**
+ * Weather detail for UI display
+ * Contains current conditions and 3-day forecast
+ */
 data class WeatherDetail(
-    val locationName: String,           // "Bogota, Colombia"
-    val currentWeather: CurrentCondition, // Clima actual con detalles
-    val threeDayForecast: List<DayForecastWithName> // 3 días de pronóstico
+    val locationName: String,
+    val currentWeather: CurrentCondition,
+    val threeDayForecast: List<DayForecastWithName>
 )
 
+/**
+ * Current weather condition with essential display data
+ */
 data class CurrentCondition(
-    val conditionText: String,      // "Partly Cloudy"
-    val conditionIcon: String,      // URL del icono
-    val tempCelsius: Double,        // 12.0
-    val feelsLikeCelsius: Double,   // 9.0
-    val windKph: Double,            // 4.0
-    val windDirection: String,      // "ESE"
-    val humidity: Int,              // 100
-    val visibilityKm: Double        // 10.0
-) {
+    val conditionText: String,
+    val conditionIcon: String,
+    val tempCelsius: Double,
+    val feelsLikeCelsius: Double,
+    val windKph: Double,
+    val windDirection: String,
+    val humidity: Int,
+    val visibilityKm: Double
+)
 
-    val displayTemp: String
-        get() = "${tempCelsius.toInt()}°C"
-
-    val displayFeelsLike: String
-        get() = "Sensación: ${feelsLikeCelsius.toInt()}°C"
-
-    val displayWind: String
-        get() = "Viento: ${windKph.toInt()} km/h $windDirection"
-
-    val displayHumidity: String
-        get() = "Humedad: $humidity%"
-
-    val displayVisibility: String
-        get() = "Visibilidad: ${visibilityKm.toInt()} km"
-}
-
+/**
+ * Daily forecast with localized day name
+ * dayName is filled in UI using WeatherFormatter.getDayName()
+ */
 data class DayForecastWithName(
-    val date: String,              // "2025-12-10"
-    val dayName: String,           // "Hoy", "Mañana", "Pasado mañana"
-    val conditionText: String,     // "Partly Cloudy"
-    val conditionIcon: String,     // URL del icono
-    val avgTempCelsius: Double     // 12.0
-) {
-
-    val displayTemp: String
-        get() = "${avgTempCelsius.toInt()}°C"
-}
+    val date: String,
+    val dayName: String,
+    val conditionText: String,
+    val conditionIcon: String,
+    val avgTempCelsius: Double
+)

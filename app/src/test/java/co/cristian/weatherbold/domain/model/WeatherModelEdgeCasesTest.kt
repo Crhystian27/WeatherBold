@@ -116,9 +116,10 @@ class WeatherModelEdgeCasesTest {
         val detail = TestData.createWeatherDetail()
         
         assertThat(detail.threeDayForecast).hasSize(3)
-        assertThat(detail.threeDayForecast[0].dayName).isEqualTo("Hoy")
-        assertThat(detail.threeDayForecast[1].dayName).isEqualTo("Mañana")
-        assertThat(detail.threeDayForecast[2].dayName).isEqualTo("Pasado mañana")
+        // Day names are now empty and filled in UI with localized resources
+        assertThat(detail.threeDayForecast[0].dayName).isEmpty()
+        assertThat(detail.threeDayForecast[1].dayName).isEmpty()
+        assertThat(detail.threeDayForecast[2].dayName).isEmpty()
     }
     
     @Test

@@ -11,10 +11,7 @@ import javax.inject.Singleton
 /**
  * Hilt module for repositories
  * Binds interfaces to implementations
- * 
- * Note: This module is used by Hilt at compile-time for dependency injection.
- * The IDE may show warnings about unused code, but these are false positives.
- * The bindings are consumed by UseCases that inject WeatherRepository.
+ *
  */
 @Suppress("unused")
 @Module

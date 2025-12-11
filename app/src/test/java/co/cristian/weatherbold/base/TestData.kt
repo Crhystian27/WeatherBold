@@ -61,9 +61,9 @@ object TestData {
         locationName: String = "Bogota, Colombia",
         currentWeather: CurrentCondition = createCurrentCondition(),
         threeDayForecast: List<DayForecastWithName> = listOf(
-            createDayForecastWithName(dayName = "Hoy"),
-            createDayForecastWithName(date = "2025-12-12", dayName = "Mañana"),
-            createDayForecastWithName(date = "2025-12-13", dayName = "Pasado mañana")
+            createDayForecastWithName(dayName = ""),
+            createDayForecastWithName(date = "2025-12-12", dayName = ""),
+            createDayForecastWithName(date = "2025-12-13", dayName = "")
         )
     ): WeatherDetail = WeatherDetail(locationName, currentWeather, threeDayForecast)
     

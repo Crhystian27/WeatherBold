@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import co.cristian.weatherbold.core.util.WeatherFormatter
 import co.cristian.weatherbold.databinding.ItemDayForecastBinding
 import co.cristian.weatherbold.domain.model.DayForecastWithName
 import coil.load
@@ -21,22 +22,24 @@ class DayForecastAdapter : ListAdapter<DayForecastWithName, DayForecastAdapter.V
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     class ViewHolder(
         private val binding: ItemDayForecastBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(forecast: DayForecastWithName) {
+        fun bind(forecast: DayForecastWithName, position: Int) {
             binding.apply {
-                dayNameText.text = forecast.dayName
+                val context = binding.root.context
+                
+                // Use localized day names from resources
+                dayNameText.text = WeatherFormatter.getDayName(context, position)
                 dayConditionText.text = forecast.conditionText
-                dayTemperatureText.text = forecast.displayTemp
+                dayTemperatureText.text = WeatherFormatter.formatTemperature(context, forecast.avgTempCelsius)
 
                 // Load weather icon with Coil
-                val iconUrl = "https:${forecast.conditionIcon}"
-                dayWeatherIcon.load(iconUrl) {
+                dayWeatherIcon.load(forecast.conditionIcon) {
                     crossfade(true)
                 }
             }

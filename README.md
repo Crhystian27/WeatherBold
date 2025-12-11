@@ -154,10 +154,5 @@ GitHub Actions configurado para ejecutarse automáticamente en cada push a `mast
 
 ---
 
-## 📄 Licencia
-
-Este proyecto es de código abierto y está disponible bajo la licencia MIT.
-
----
 
 ⭐ **Si te gusta el proyecto, dale una estrella en GitHub!**

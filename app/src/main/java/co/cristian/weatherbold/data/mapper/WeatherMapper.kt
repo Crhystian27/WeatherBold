@@ -4,42 +4,43 @@ import co.cristian.weatherbold.data.remote.dto.*
 import co.cristian.weatherbold.domain.model.*
 import javax.inject.Inject
 
+/**
+ * Mapper for transforming DTOs from API to domain models
+ * Handles icon URL formatting (adds https: protocol)
+ */
 class WeatherMapper @Inject constructor() {
 
-    fun mapLocationDtoListToDomain(dtoList: List<LocationDto>): List<Location> {
-        return dtoList.map { mapLocationDtoToDomain(it) }
-    }
+    // Location mapping
+    fun mapLocationDtoListToDomain(dtoList: List<LocationDto>): List<Location> =
+        dtoList.map(::mapLocationDtoToDomain)
 
-    fun mapLocationDtoToDomain(dto: LocationDto): Location {
-        return Location(
-            id = dto.id,
-            name = dto.name,
-            region = dto.region,
-            country = dto.country,
-            latitude = dto.latitude,
-            longitude = dto.longitude
-        )
-    }
+    fun mapLocationDtoToDomain(dto: LocationDto): Location = Location(
+        id = dto.id,
+        name = dto.name,
+        region = dto.region,
+        country = dto.country,
+        latitude = dto.latitude,
+        longitude = dto.longitude
+    )
 
-    fun mapForecastResponseToDomain(dto: ForecastResponseDto): Weather {
-        return Weather(
-            location = mapLocationInfoToDomain(dto.location),
-            current = mapCurrentWeatherToDomain(dto.current),
-            forecast = dto.forecast.forecastDays.map { mapForecastDayToDomain(it) }
-        )
-    }
+    // Weather mapping
+    fun mapForecastResponseToDomain(dto: ForecastResponseDto): Weather = Weather(
+        location = mapLocationInfoToDomain(dto.location),
+        current = mapCurrentWeatherToDomain(dto.current),
+        forecast = dto.forecast.forecastDays.map(::mapForecastDayToDomain)
+    )
 
     fun mapForecastResponseToSummary(dto: ForecastResponseDto): WeatherSummary {
         val locationName = "${dto.location.name}, ${dto.location.country}"
         
-        // Tomar solo los primeros 3 días
+        // Take only first 3 days
         val forecastDays = dto.forecast.forecastDays
             .take(3)
             .map { dayDto ->
                 DayForecast(
                     date = dayDto.date,
                     conditionText = dayDto.day.condition.text,
-                    conditionIcon = "https:${dayDto.day.condition.icon}",
+                    conditionIcon = addHttpsProtocol(dayDto.day.condition.icon),
                     avgTempCelsius = dayDto.day.avgTempCelsius
                 )
             }
@@ -82,13 +83,16 @@ class WeatherMapper @Inject constructor() {
         )
     }
     
-    private fun mapConditionToDomain(dto: ConditionDto): WeatherCondition {
-        return WeatherCondition(
-            text = dto.text,
-            icon = "https:${dto.icon}", // La API retorna URLs sin protocolo
-            code = dto.code
-        )
-    }
+    private fun mapConditionToDomain(dto: ConditionDto): WeatherCondition = WeatherCondition(
+        text = dto.text,
+        icon = addHttpsProtocol(dto.icon),
+        code = dto.code
+    )
+    
+    /**
+     * Adds https: protocol to icon URLs (API returns URLs without protocol)
+     */
+    private fun addHttpsProtocol(iconUrl: String): String = "https:$iconUrl"
     
     private fun mapForecastDayToDomain(dto: ForecastDayDto): ForecastDay {
         return ForecastDay(
@@ -130,13 +134,16 @@ class WeatherMapper @Inject constructor() {
         )
     }
 
+    /**
+     * Maps forecast response to weather detail for UI display
+     * Day names are empty and filled in UI layer using WeatherFormatter for localization
+     */
     fun mapForecastResponseToDetail(dto: ForecastResponseDto): WeatherDetail {
         val locationName = "${dto.location.name}, ${dto.location.country}"
         
-        // Mapear clima actual con detalles
         val currentCondition = CurrentCondition(
             conditionText = dto.current.condition.text,
-            conditionIcon = "https:${dto.current.condition.icon}",
+            conditionIcon = addHttpsProtocol(dto.current.condition.icon),
             tempCelsius = dto.current.tempCelsius,
             feelsLikeCelsius = dto.current.feelslikeCelsius,
             windKph = dto.current.windKph,
@@ -145,16 +152,14 @@ class WeatherMapper @Inject constructor() {
             visibilityKm = dto.current.visibilityKm
         )
         
-        // Mapear 3 días de pronóstico con nombres de día
-        val dayNames = listOf("Hoy", "Mañana", "Pasado mañana")
         val threeDayForecast = dto.forecast.forecastDays
             .take(3)
-            .mapIndexed { index, dayDto ->
+            .map { dayDto ->
                 DayForecastWithName(
                     date = dayDto.date,
-                    dayName = dayNames.getOrElse(index) { dayDto.date },
+                    dayName = "", // Filled in UI using WeatherFormatter.getDayName()
                     conditionText = dayDto.day.condition.text,
-                    conditionIcon = "https:${dayDto.day.condition.icon}",
+                    conditionIcon = addHttpsProtocol(dayDto.day.condition.icon),
                     avgTempCelsius = dayDto.day.avgTempCelsius
                 )
             }

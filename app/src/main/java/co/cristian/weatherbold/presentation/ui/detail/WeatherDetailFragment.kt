@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import co.cristian.weatherbold.core.network.NetworkResult
+import co.cristian.weatherbold.core.util.WeatherFormatter
 import co.cristian.weatherbold.databinding.FragmentWeatherDetailBinding
 import co.cristian.weatherbold.domain.model.WeatherDetail
 import coil.load
@@ -85,18 +86,18 @@ class WeatherDetailFragment : Fragment() {
             contentContainer.isVisible = true
             errorLayout.isVisible = false
 
-            // Current weather
+            // Current weather using WeatherFormatter
             val current = detail.currentWeather
-            temperatureText.text = current.displayTemp
+            val ctx = requireContext()
+            temperatureText.text = WeatherFormatter.formatTemperature(ctx, current.tempCelsius)
             conditionText.text = current.conditionText
-            feelsLikeText.text = current.displayFeelsLike
-            windText.text = current.displayWind
-            humidityText.text = current.displayHumidity
-            visibilityText.text = current.displayVisibility
+            feelsLikeText.text = WeatherFormatter.formatFeelsLike(ctx, current.feelsLikeCelsius)
+            windText.text = WeatherFormatter.formatWind(ctx, current.windKph, current.windDirection)
+            humidityText.text = WeatherFormatter.formatHumidity(ctx, current.humidity)
+            visibilityText.text = WeatherFormatter.formatVisibility(ctx, current.visibilityKm)
 
-            // Load weather icon with Coil
-            val iconUrl = "https:${current.conditionIcon}"
-            weatherIcon.load(iconUrl) {
+            // Load weather icon with Coil (URL already has https: protocol from mapper)
+            weatherIcon.load(current.conditionIcon) {
                 crossfade(true)
             }
 

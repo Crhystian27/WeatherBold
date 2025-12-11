@@ -66,9 +66,10 @@ class WeatherMapperTest {
         assertThat(result.currentWeather.tempCelsius).isEqualTo(12.0)
         assertThat(result.currentWeather.humidity).isEqualTo(100)
         assertThat(result.threeDayForecast).hasSize(3)
-        assertThat(result.threeDayForecast[0].dayName).isEqualTo("Hoy")
-        assertThat(result.threeDayForecast[1].dayName).isEqualTo("Mañana")
-        assertThat(result.threeDayForecast[2].dayName).isEqualTo("Pasado mañana")
+        // Day names are now empty and filled in UI with localized resources
+        assertThat(result.threeDayForecast[0].dayName).isEmpty()
+        assertThat(result.threeDayForecast[1].dayName).isEmpty()
+        assertThat(result.threeDayForecast[2].dayName).isEmpty()
     }
     
     @Test

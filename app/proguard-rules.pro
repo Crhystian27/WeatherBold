@@ -94,3 +94,22 @@
 -keepclassmembers class kotlin.Metadata {
     public <methods>;
 }
+
+# ===== Coil (Image Loading) =====
+-dontwarn coil.**
+-keep class coil.ImageLoader { *; }
+-keep class coil.request.ImageRequest { *; }
+
+# ===== Navigation Component =====
+-keepnames class androidx.navigation.fragment.NavHostFragment
+-keep class * extends androidx.fragment.app.Fragment{}
+
+# ===== ViewBinding =====
+-keep class * implements androidx.viewbinding.ViewBinding {
+    public static *** bind(android.view.View);
+    public static *** inflate(android.view.LayoutInflater);
+}
+
+# ===== Material Components =====
+-dontwarn com.google.android.material.**
+-keep class com.google.android.material.R$* { *; }
