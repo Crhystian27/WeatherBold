@@ -12,7 +12,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
 import co.cristian.weatherbold.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding.navView?.let {
             appBarConfiguration = AppBarConfiguration(
                 setOf(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow, R.id.nav_settings
+                    R.id.nav_search, R.id.nav_reflow, R.id.nav_slideshow
                 ),
                 binding.drawerLayout
             )
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         binding.appBarMain.contentMain.bottomNavView?.let {
             appBarConfiguration = AppBarConfiguration(
                 setOf(
-                    R.id.nav_transform, R.id.nav_reflow, R.id.nav_slideshow
+                    R.id.nav_search, R.id.nav_reflow, R.id.nav_slideshow
                 )
             )
             setupActionBarWithNavController(navController, appBarConfiguration)
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    //TODO lottie url -> https://lottie.host/4290d485-4521-4ba4-9639-87885de1b1e5/c0kdFSuse3.lottie
+    //TODO lottie url -> https://lottie.host/ae7a0ddd-5756-4f49-b328-e54d97d6a7f0/CTwJgmjG1W.lottie
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val result = super.onCreateOptionsMenu(menu)

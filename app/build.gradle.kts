@@ -82,8 +82,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
 
-    // Lottie
-    implementation(libs.lottie.compose)
+    // Image Loading
+    implementation(libs.coil)
 
     // Testing
     testImplementation(libs.junit)
