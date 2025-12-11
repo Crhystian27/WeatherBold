@@ -8,19 +8,32 @@
     <fragment
         android:id="@+id/nav_search"
         android:name="co.cristian.weatherbold.presentation.ui.search.SearchFragment"
-        android:label="@string/menu_search"
-        tools:layout="@layout/fragment_search" />
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_search">
+        
+        <action
+            android:id="@+id/action_search_to_detail"
+            app:destination="@+id/nav_weather_detail"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_reflow"
-        android:name="co.cristian.weatherbold.ui.reflow.ReflowFragment"
-        android:label="@string/menu_reflow"
-        tools:layout="@layout/fragment_reflow" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="co.cristian.weatherbold.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_weather_detail"
+        android:name="co.cristian.weatherbold.presentation.ui.detail.WeatherDetailFragment"
+        android:label="{locationName}"
+        tools:layout="@layout/fragment_weather_detail">
+        
+        <argument
+            android:name="locationName"
+            app:argType="string" />
+        <argument
+            android:name="locationCountry"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 
 </navigation>

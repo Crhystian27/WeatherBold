@@ -16,6 +16,7 @@ import javax.inject.Singleton
  * The IDE may show warnings about unused code, but these are false positives.
  * The bindings are consumed by UseCases that inject WeatherRepository.
  */
+@Suppress("unused")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {

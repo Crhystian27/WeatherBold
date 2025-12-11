@@ -16,8 +16,8 @@ import javax.inject.Inject
  * ViewModel for location search with real-time debounce
  * 
  * Features:
- * - 600ms debounce
- * - Minimum 3 characters filter
+ * - Configurable debounce delay
+ * - Minimum character validation
  * - Distinct to avoid duplicate searches
  * - Automatic cancellation of previous searches
  */
@@ -26,6 +26,11 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val searchLocationUseCase: SearchLocationUseCase
 ) : ViewModel() {
+    
+    companion object {
+        const val MIN_SEARCH_LENGTH = ApiConstants.MIN_SEARCH_QUERY_LENGTH
+        private const val DEBOUNCE_DELAY = ApiConstants.SEARCH_DEBOUNCE_DELAY
+    }
     
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
@@ -43,9 +48,9 @@ class SearchViewModel @Inject constructor(
     private fun setupSearchDebounce() {
         viewModelScope.launch {
             _searchQuery
-                .debounce(ApiConstants.SEARCH_DEBOUNCE_DELAY)
+                .debounce(DEBOUNCE_DELAY)
                 .map { it.trim() }
-                .filter { it.length >= ApiConstants.MIN_SEARCH_QUERY_LENGTH }
+                .filter { it.length >= MIN_SEARCH_LENGTH }
                 .distinctUntilChanged()
                 .collectLatest { query ->
                     searchLocation(query)
@@ -61,7 +66,7 @@ class SearchViewModel @Inject constructor(
         _searchQuery.value = query
         
         // Clear results if query too short
-        if (query.trim().length < ApiConstants.MIN_SEARCH_QUERY_LENGTH) {
+        if (query.trim().length < MIN_SEARCH_LENGTH) {
             _searchResults.value = NetworkResult.Loading
         }
     }

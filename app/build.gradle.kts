@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.androidx.navigation.safeargs)
 }
 
 android {
@@ -54,6 +55,94 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }
+}
+
+// JaCoCo configuration for code coverage
+apply(plugin = "jacoco")
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+    
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+    
+    val fileFilter = listOf(
+        // Android generated
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
+        
+        // Data Binding
+        "**/*\$ViewInjector*.*",
+        "**/*\$ViewBinder*.*",
+        "**/databinding/*",
+        "**/android/databinding/*",
+        "**/androidx/databinding/*",
+        "**/BR.*",
+        
+        // Hilt/Dagger generated
+        "**/di/**",
+        "**/*_Factory.*",
+        "**/*_MembersInjector.*",
+        "**/*Module.*",
+        "**/*Module\$*.*",
+        "**/Hilt_*.*",
+        "**/*_HiltModules*.*",
+        "**/*_ComponentTreeDeps*.*",
+        "**/*_Provide*Factory*.*",
+        
+        // UI Layer (Fragments, Activities, Adapters) - NO BUSINESS LOGIC
+        "**/presentation/ui/**/*Fragment.*",
+        "**/presentation/ui/**/*Adapter.*",
+        "**/presentation/ui/**/*Extensions.*",
+        "**/MainActivity.*",
+        "**/MainActivity\$*.*",
+        "**/WeatherBoldApplication.*",
+        
+        // DTOs (Data Transfer Objects - no business logic)
+        "**/data/remote/dto/**",
+        
+        // API Interfaces (no logic to test)
+        "**/data/remote/api/**",
+        "**/data/remote/datasource/**",
+        
+        // Security/Config (tested via integration)
+        "**/core/security/**",
+        "**/core/network/ApiKeyInterceptor.*",
+        "**/core/network/NetworkConnectivityManager.*",
+        "**/core/network/NetworkErrorHandler.*",
+        
+        // Constants (no logic)
+        "**/core/network/ApiConstants.*",
+        "**/core/util/UiConstants.*",
+        
+        // Repository interfaces (no implementation)
+        "**/domain/repository/*Repository.*"
+    )
+    
+    val debugTree = fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/debug") {
+        exclude(fileFilter)
+    }
+    
+    val mainSrc = "${project.projectDir}/src/main/java"
+    
+    sourceDirectories.setFrom(files(mainSrc))
+    classDirectories.setFrom(files(debugTree))
+    executionData.setFrom(fileTree(layout.buildDirectory.get().asFile) {
+        include("jacoco/testDebugUnitTest.exec")
+    })
 }
 
 dependencies {
@@ -87,6 +176,10 @@ dependencies {
 
     // Testing
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

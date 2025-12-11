@@ -6,8 +6,6 @@ import co.cristian.weatherbold.core.network.NetworkResult
 import co.cristian.weatherbold.data.mapper.WeatherMapper
 import co.cristian.weatherbold.data.remote.datasource.WeatherRemoteDataSource
 import co.cristian.weatherbold.domain.model.Location
-import co.cristian.weatherbold.domain.model.Weather
-import co.cristian.weatherbold.domain.model.WeatherSummary
 import co.cristian.weatherbold.domain.model.WeatherDetail
 import co.cristian.weatherbold.domain.repository.WeatherRepository
 import kotlinx.coroutines.Dispatchers
@@ -42,65 +40,6 @@ class WeatherRepositoryImpl @Inject constructor(
             val response = remoteDataSource.searchLocation(query)
             val locations = weatherMapper.mapLocationDtoListToDomain(response)
             emit(NetworkResult.Success(locations))
-        } catch (e: Exception) {
-            emit(networkErrorHandler.handleError(e))
-        }
-    }.flowOn(Dispatchers.IO)
-    
-    override fun getForecast(
-        location: String,
-        days: Int,
-        includeAqi: Boolean,
-        includeAlerts: Boolean
-    ): Flow<NetworkResult<Weather>> = flow {
-        emit(NetworkResult.Loading)
-        
-        // Check connectivity before request
-        if (!networkConnectivityManager.isNetworkAvailable()) {
-            emit(NetworkResult.Error(
-                message = "No internet connection. Please check your connection.",
-                code = null
-            ))
-            return@flow
-        }
-        
-        try {
-            val response = remoteDataSource.getForecast(
-                location = location,
-                days = days
-            )
-            val weather = weatherMapper.mapForecastResponseToDomain(response)
-            emit(NetworkResult.Success(weather))
-        } catch (e: Exception) {
-            emit(networkErrorHandler.handleError(e))
-        }
-    }.flowOn(Dispatchers.IO)
-    
-    /**
-     * Gets simplified forecast (3 days with essential info for UI)
-     */
-    override fun getForecastSummary(
-        location: String,
-        days: Int
-    ): Flow<NetworkResult<WeatherSummary>> = flow {
-        emit(NetworkResult.Loading)
-        
-        // Check connectivity before request
-        if (!networkConnectivityManager.isNetworkAvailable()) {
-            emit(NetworkResult.Error(
-                message = "No internet connection. Please check your connection.",
-                code = null
-            ))
-            return@flow
-        }
-        
-        try {
-            val response = remoteDataSource.getForecast(
-                location = location,
-                days = days
-            )
-            val summary = weatherMapper.mapForecastResponseToSummary(response)
-            emit(NetworkResult.Success(summary))
         } catch (e: Exception) {
             emit(networkErrorHandler.handleError(e))
         }

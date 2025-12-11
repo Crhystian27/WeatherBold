@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import co.cristian.weatherbold.core.network.NetworkResult
 import co.cristian.weatherbold.databinding.FragmentSearchBinding
 import co.cristian.weatherbold.domain.model.Location
@@ -20,10 +21,15 @@ import kotlinx.coroutines.launch
  * Fragment for real-time location search
  * 
  * Features:
- * - Real-time search with 300ms debounce
- * - Minimum 3 characters to search
+ * - Real-time search with debounce
+ * - Minimum characters validation
  * - States: Loading, Success, Error, Empty
- * - Loading effects in each card item
+ * - Responsive layout (1 column portrait, 2 columns landscape)
+ * - Navigation to weather detail
+ * 
+ * Clean Architecture:
+ * - Depends only on ViewModel and Domain models
+ * - No business logic in UI layer
  */
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -52,14 +58,14 @@ class SearchFragment : Fragment() {
 
     private fun setupRecyclerView() {
         adapter = LocationSearchAdapter { location ->
-            onLocationSelected(location)
+            navigateToWeatherDetail(location)
         }
         binding.locationsRecyclerView.adapter = adapter
     }
 
     /**
      * Setup search input with TextWatcher
-     * Clear button ("X") handled automatically by TextInputLayout
+     * Clear button handled automatically by TextInputLayout
      */
     private fun setupSearchInput() {
         binding.searchEditText.addTextChangedListener { text ->
@@ -89,7 +95,7 @@ class SearchFragment : Fragment() {
     private fun showResults(locations: List<Location>) {
         binding.apply {
             if (locations.isEmpty()) {
-                val hasQuery = viewModel.searchQuery.value.trim().length >= 3
+                val hasQuery = viewModel.searchQuery.value.trim().length >= SearchViewModel.MIN_SEARCH_LENGTH
                 emptyStateLayout.isVisible = hasQuery
                 locationsRecyclerView.isVisible = false
             } else {
@@ -112,11 +118,16 @@ class SearchFragment : Fragment() {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun onLocationSelected(location: Location) {
-        // TODO: Navigate to WeatherDetailFragment
-        // findNavController().navigate(
-        //     SearchFragmentDirections.actionSearchToDetail(location.name)
-        // )
+    /**
+     * Navigate to weather detail screen
+     * Passes location name and country as arguments
+     */
+    private fun navigateToWeatherDetail(location: Location) {
+        val action = SearchFragmentDirections.actionSearchToDetail(
+            locationName = location.name,
+            locationCountry = location.country
+        )
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

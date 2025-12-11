@@ -11,5 +11,5 @@ data class Location(
 ) {
 
     val displayName: String
-        get() = "$name, $region /n$country"
+        get() = "$name, $region\n$country"
 }
