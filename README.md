@@ -36,6 +36,17 @@ Aplicación Android moderna de pronóstico del clima con búsqueda instantánea 
 
 ---
 
+## 📸 Capturas de Pantalla
+
+| | |
+|:---:|:---:|
+| ![](screenshots/1.gif) | ![](screenshots/2.gif) |
+| ![](screenshots/3.webp) | ![](screenshots/4.webp) |
+| ![](screenshots/5.webp) | ![](screenshots/6.webp) |
+| ![](screenshots/7.webp) | |
+
+---
+
 ## 🛠️ Stack Tecnológico
 
 | Categoría | Tecnología |
