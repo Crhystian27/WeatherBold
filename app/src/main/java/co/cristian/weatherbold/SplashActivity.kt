@@ -35,15 +35,34 @@ class SplashActivity : AppCompatActivity() {
 
     private fun setupLottieAnimation() {
         binding.lottieAnimation.apply {
-            // Animation is already configured in XML with lottie_rawRes and lottie_autoPlay
-            // Just add listeners for debugging
+            // Animation is configured in XML with lottie_fileName from assets folder
+            // Add listeners for debugging
             addLottieOnCompositionLoadedListener { composition ->
                 Log.d("SplashActivity", "Lottie animation loaded successfully: ${composition.duration}ms")
             }
 
             setFailureListener { throwable ->
                 Log.e("SplashActivity", "Lottie animation failed to load", throwable)
+                // Fallback: navigate immediately if animation fails
+                navigateToMain()
             }
+        }
+    }
+
+    private fun navigateToMain() {
+        val intent = Intent(this@SplashActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_OPEN,
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         }
     }
 
@@ -61,22 +80,7 @@ class SplashActivity : AppCompatActivity() {
                 .alpha(0f)
                 .setDuration(FADE_OUT_DURATION)
                 .withEndAction {
-                    // Navigate to MainActivity after fade out completes
-                    val intent = Intent(this@SplashActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    
-                    // Smooth transition (using overrideActivityTransition for API 34+)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                        overrideActivityTransition(
-                            OVERRIDE_TRANSITION_OPEN,
-                            android.R.anim.fade_in,
-                            android.R.anim.fade_out
-                        )
-                    } else {
-                        @Suppress("DEPRECATION")
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    }
+                    navigateToMain()
                 }
                 .start()
         }
