@@ -41,9 +41,15 @@ Aplicación Android moderna de pronóstico del clima con búsqueda instantánea 
 | | |
 |:---:|:---:|
 | ![](screenshots/1.gif) | ![](screenshots/2.gif) |
-| ![](screenshots/3.webp) | ![](screenshots/4.webp) |
-| ![](screenshots/5.webp) | ![](screenshots/6.webp) |
-| ![](screenshots/7.webp) | |
+
+<p align="center">
+  <img src="screenshots/3.webp" width="270" alt="Screenshot 3">
+</p>
+
+| | |
+|:---:|:---:|
+| ![](screenshots/4.webp) | ![](screenshots/5.webp) |
+| ![](screenshots/6.webp) | ![](screenshots/7.webp) |
 
 ---
 
