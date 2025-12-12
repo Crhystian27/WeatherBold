@@ -45,14 +45,15 @@ class LocationSearchAdapter(
                 loadingIndicator.isVisible = true
                 countryEmoji.isVisible = false
                 
-                // Set country emoji
+                // Set country emoji using Location's method
                 countryEmoji.text = location.getCountryEmoji()
                 
-                // Simulate loading with minimum 400ms delay for smooth animation
+                // Simulate loading with minimum delay for smooth animation
+                // This delay ensures the loading animation is visible to the user
                 itemView.post {
                     itemView.handler?.postDelayed({
                         val elapsed = System.currentTimeMillis() - startTime
-                        val remainingDelay = (400 - elapsed).coerceAtLeast(0)
+                        val remainingDelay = (MIN_LOADING_ANIMATION_DELAY_MS - elapsed).coerceAtLeast(0)
                         
                         itemView.handler?.postDelayed({
                             // Hide progress indicators and show content
@@ -71,6 +72,14 @@ class LocationSearchAdapter(
                     onLocationClick(location)
                 }
             }
+        }
+        
+        companion object {
+            /**
+             * Minimum delay to ensure loading animation is visible
+             * This provides better UX by showing a smooth transition
+             */
+            private const val MIN_LOADING_ANIMATION_DELAY_MS = 400L
         }
     }
 
