@@ -13,12 +13,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * ViewModel for location search with real-time debounce
+ * ViewModel for location search with real-time results
  * 
  * Features:
- * - Configurable debounce delay
- * - Minimum character validation
- * - Distinct to avoid duplicate searches
+ * - Instant search from first character (MIN_SEARCH_QUERY_LENGTH = 1)
+ * - 400ms debounce delay to optimize API calls
+ * - Distinct queries to avoid duplicate searches
  * - Automatic cancellation of previous searches
  */
 @OptIn(FlowPreview::class)

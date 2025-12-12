@@ -11,170 +11,200 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_medium">
+        android:padding="@dimen/spacing_medium"
+        android:clipToPadding="false">
 
-        <!-- Loading State with Shimmer -->
-        <include
-            android:id="@+id/shimmer_layout"
-            layout="@layout/shimmer_weather_detail"
-            android:layout_width="match_parent"
+        <!-- Loading State -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminate="true"
             android:visibility="gone"
+            app:indicatorColor="@array/progress_gradient_colors"
+            app:indicatorSize="48dp"
+            app:trackThickness="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
-        <!-- Content Container -->
-        <LinearLayout
+        <!-- Current Weather Card -->
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/content_container"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
             android:visibility="gone"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible">
 
-            <!-- Current Weather Card -->
-            <com.google.android.material.card.MaterialCardView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_medium"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardElevation="@dimen/card_elevation">
+                android:padding="@dimen/spacing_large">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- Location Name -->
+                <TextView
+                    android:id="@+id/location_name_text"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_large">
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Bogotá, Cundinamarca\nColombia" />
 
-                    <!-- Location Name -->
-                    <TextView
-                        android:id="@+id/location_name_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_medium"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="@dimen/text_size_large"
-                        android:textStyle="bold"
-                        tools:text="Bogotá, Colombia" />
+                <!-- Weather Icon -->
+                <ImageView
+                    android:id="@+id/weather_icon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:contentDescription="@string/weather_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/location_name_text"
+                    tools:src="@drawable/ic_weather" />
 
-                    <!-- Weather Icon & Temperature -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                <!-- Temperature -->
+                <TextView
+                    android:id="@+id/temperature_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_medium"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/condition_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/weather_icon"
+                    app:layout_constraintTop_toTopOf="@id/weather_icon"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="12°C" />
 
-                        <ImageView
-                            android:id="@+id/weather_icon"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:contentDescription="@string/weather_icon"
-                            tools:src="@drawable/ic_search_black_24dp" />
+                <!-- Condition -->
+                <TextView
+                    android:id="@+id/condition_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_medium"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="@dimen/text_size_medium"
+                    app:layout_constraintBottom_toBottomOf="@id/weather_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/weather_icon"
+                    app:layout_constraintTop_toBottomOf="@id/temperature_text"
+                    tools:text="Partly Cloudy" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/spacing_medium"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                <!-- Divider -->
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/weather_icon" />
 
-                            <TextView
-                                android:id="@+id/temperature_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="?android:attr/textColorPrimary"
-                                android:textSize="48sp"
-                                android:textStyle="bold"
-                                tools:text="12°C" />
+                <!-- Feels Like -->
+                <TextView
+                    android:id="@+id/feels_like_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/text_size_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divider"
+                    tools:text="Sensación: 9°C" />
 
-                            <TextView
-                                android:id="@+id/condition_text"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="?android:attr/textColorSecondary"
-                                android:textSize="@dimen/text_size_medium"
-                                tools:text="Partly Cloudy" />
+                <!-- Wind -->
+                <TextView
+                    android:id="@+id/wind_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/text_size_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/feels_like_text"
+                    tools:text="Viento: 4 km/h ESE" />
 
-                        </LinearLayout>
+                <!-- Humidity -->
+                <TextView
+                    android:id="@+id/humidity_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/text_size_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/wind_text"
+                    tools:text="Humedad: 100%" />
 
-                    </LinearLayout>
+                <!-- Visibility -->
+                <TextView
+                    android:id="@+id/visibility_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="@dimen/text_size_normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/humidity_text"
+                    tools:text="Visibilidad: 10 km" />
 
-                    <!-- Divider -->
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginVertical="@dimen/spacing_medium"
-                        android:background="?android:attr/listDivider" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <!-- Weather Details Grid -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+        </com.google.android.material.card.MaterialCardView>
 
-                        <TextView
-                            android:id="@+id/feels_like_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/spacing_small"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="@dimen/text_size_normal"
-                            tools:text="Sensación: 9°C" />
+        <!-- 3-Day Forecast Title -->
+        <TextView
+            android:id="@+id/forecast_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:text="@string/three_day_forecast"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/content_container"
+            tools:visibility="visible" />
 
-                        <TextView
-                            android:id="@+id/wind_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/spacing_small"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="@dimen/text_size_normal"
-                            tools:text="Viento: 4 km/h ESE" />
-
-                        <TextView
-                            android:id="@+id/humidity_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/spacing_small"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="@dimen/text_size_normal"
-                            tools:text="Humedad: 100%" />
-
-                        <TextView
-                            android:id="@+id/visibility_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:textSize="@dimen/text_size_normal"
-                            tools:text="Visibilidad: 10 km" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- 3-Day Forecast Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_small"
-                android:text="@string/three_day_forecast"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold" />
-
-            <!-- 3-Day Forecast RecyclerView -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/forecast_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_day_forecast" />
-
-        </LinearLayout>
+        <!-- 3-Day Forecast RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/forecast_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forecast_title"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_day_forecast"
+            tools:visibility="visible" />
 
         <!-- Error State -->
         <LinearLayout
@@ -188,7 +218,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/error_message"
@@ -199,14 +230,15 @@
                 android:textSize="@dimen/text_size_medium"
                 tools:text="Error loading weather data" />
 
-            <com.google.android.material.button.MaterialButton
+            <ImageView
                 android:id="@+id/retry_button"
-                style="@style/WeatherButton.Primary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:background="@drawable/button_gradient"
-                android:text="@string/retry" />
+                android:padding="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/retry"
+                android:src="@drawable/ic_retry_gradient" />
 
         </LinearLayout>
 

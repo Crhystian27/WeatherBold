@@ -18,11 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 /**
- * Fragment for real-time location search
+ * Fragment for instant location search
  * 
  * Features:
- * - Real-time search with debounce
- * - Minimum characters validation
+ * - Instant search results from first character typed
+ * - 400ms debounce to optimize API calls
  * - States: Loading, Success, Error, Empty
  * - Responsive layout (1 column portrait, 2 columns landscape)
  * - Navigation to weather detail
@@ -120,11 +120,12 @@ class SearchFragment : Fragment() {
 
     /**
      * Navigate to weather detail screen
-     * Passes location name and country as arguments
+     * Passes location name, region, and country as arguments
      */
     private fun navigateToWeatherDetail(location: Location) {
         val action = SearchFragmentDirections.actionSearchToDetail(
             locationName = location.name,
+            locationRegion = location.region,
             locationCountry = location.country
         )
         findNavController().navigate(action)

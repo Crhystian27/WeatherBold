@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nombre de la App -->
+    <string name="app_name">Weather Bold</string>
+    
+    <!-- Menú -->
+    <string name="menu_search">Búsqueda</string>
+    <string name="menu_settings">Configuración</string>
+    <string name="menu_weather_detail">Detalle del Clima</string>
+    
+    <!-- Pantalla de Búsqueda -->
+    <string name="search_hint">Buscar ubicación</string>
+    <string name="no_results_found">No se encontraron resultados</string>
+    <string name="try_different_search">Intenta con otra búsqueda</string>
+    <string name="network_error">Sin conexión a internet</string>
+    <string name="search_error">Error al buscar ubicaciones</string>
+    
+    <!-- Pantalla de Detalle del Clima -->
+    <string name="three_day_forecast">Pronóstico de 3 días</string>
+    <string name="weather_icon">Icono del clima</string>
+    <string name="retry">Reintentar</string>
+    <string name="loading">Cargando…</string>
+    <string name="error_loading_weather">Error al cargar el clima</string>
+    
+    <!-- Formato del Clima -->
+    <string name="format_temperature">%d°C</string>
+    <string name="format_feels_like">Sensación térmica: %d°C</string>
+    <string name="format_wind" formatted="false">%d km/h %s</string>
+    <string name="format_humidity">%d%%</string>
+    <string name="format_visibility">%d km</string>
+    
+    <!-- Nombres de Días -->
+    <string name="day_today">Hoy</string>
+    <string name="day_tomorrow">Mañana</string>
+    <string name="day_after_tomorrow">Pasado Mañana</string>
+    
+    <!-- Descripciones de Contenido -->
+    <string name="location_icon_description">Icono de ubicación</string>
+    <string name="search_icon_description">Icono de búsqueda</string>
+    <string name="clear_search_description">Limpiar búsqueda</string>
+    
+    <!-- Mensajes de Error -->
+    <string name="error_generic">Algo salió mal</string>
+    <string name="error_no_internet">Por favor verifica tu conexión a internet</string>
+    <string name="error_location_not_found">Ubicación no encontrada</string>
+    <string name="error_api_error">Servicio temporalmente no disponible</string>
+</resources>

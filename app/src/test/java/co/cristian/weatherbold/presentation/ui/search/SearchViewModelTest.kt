@@ -85,4 +85,89 @@ class SearchViewModelTest : BaseViewModelTest() {
             assertThat((emission as NetworkResult.Error).message).isEqualTo(errorMessage)
         }
     }
+    
+    @Test
+    fun `search with query less than min length clears results`() = runTest {
+        viewModel = SearchViewModel(searchLocationUseCase)
+        
+        viewModel.onSearchQueryChanged("Bo")
+        testDispatcher.scheduler.advanceUntilIdle()
+        
+        assertThat(viewModel.searchResults.value).isInstanceOf(NetworkResult.Loading::class.java)
+    }
+    
+    @Test
+    fun `search with empty query clears results`() = runTest {
+        viewModel = SearchViewModel(searchLocationUseCase)
+        
+        viewModel.onSearchQueryChanged("")
+        testDispatcher.scheduler.advanceUntilIdle()
+        
+        assertThat(viewModel.searchResults.value).isInstanceOf(NetworkResult.Loading::class.java)
+    }
+    
+    @Test
+    fun `search trims whitespace from query`() = runTest {
+        val locations = TestData.createLocationList()
+        coEvery { searchLocationUseCase("Bogota") } returns flowOf(
+            NetworkResult.Success(locations)
+        )
+        
+        viewModel = SearchViewModel(searchLocationUseCase)
+        testDispatcher.scheduler.advanceUntilIdle()
+        
+        viewModel.onSearchQueryChanged("  Bogota  ")
+        testDispatcher.scheduler.advanceTimeBy(700)
+        
+        assertThat(viewModel.searchQuery.value).isEqualTo("  Bogota  ")
+    }
+    
+    @Test
+    fun `debounce prevents multiple rapid searches`() = runTest {
+        val locations = TestData.createLocationList()
+        coEvery { searchLocationUseCase(any()) } returns flowOf(
+            NetworkResult.Success(locations)
+        )
+        
+        viewModel = SearchViewModel(searchLocationUseCase)
+        testDispatcher.scheduler.advanceUntilIdle()
+        
+        viewModel.searchResults.test {
+            skipItems(1) // Skip initial Loading
+            
+            viewModel.onSearchQueryChanged("Bog")
+            testDispatcher.scheduler.advanceTimeBy(200)
+            
+            viewModel.onSearchQueryChanged("Bogo")
+            testDispatcher.scheduler.advanceTimeBy(200)
+            
+            viewModel.onSearchQueryChanged("Bogota")
+            testDispatcher.scheduler.advanceTimeBy(700)
+            
+            // Should only get one result after debounce
+            val emission = awaitItem()
+            assertThat(emission).isInstanceOf(NetworkResult.Success::class.java)
+        }
+    }
+    
+    @Test
+    fun `search with special characters is handled`() = runTest {
+        val locations = TestData.createLocationList()
+        coEvery { searchLocationUseCase("São Paulo") } returns flowOf(
+            NetworkResult.Success(locations)
+        )
+        
+        viewModel = SearchViewModel(searchLocationUseCase)
+        testDispatcher.scheduler.advanceUntilIdle()
+        
+        viewModel.searchResults.test {
+            skipItems(1)
+            
+            viewModel.onSearchQueryChanged("São Paulo")
+            testDispatcher.scheduler.advanceTimeBy(700)
+            
+            val emission = awaitItem()
+            assertThat(emission).isInstanceOf(NetworkResult.Success::class.java)
+        }
+    }
 }

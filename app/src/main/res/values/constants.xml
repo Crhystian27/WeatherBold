@@ -4,13 +4,6 @@
     <string name="temperature_unit_celsius" translatable="false">°C</string>
     <string name="temperature_unit_fahrenheit" translatable="false">°F</string>
     
-    <!-- Weather Display Formats -->
-    <string name="format_temperature">%d°C</string>
-    <string name="format_feels_like">Sensación: %d°C</string>
-    <string name="format_wind" formatted="false">Viento: %d km/h %s</string>
-    <string name="format_humidity">Humedad: %d%%</string>
-    <string name="format_visibility">Visibilidad: %d km</string>
-    
     <!-- Search Configuration -->
     <integer name="search_min_length">3</integer>
     <integer name="search_debounce_ms">600</integer>
@@ -18,11 +11,6 @@
     <!-- Forecast Configuration -->
     <integer name="forecast_days_default">3</integer>
     <integer name="forecast_days_max">7</integer>
-    
-    <!-- Day Names -->
-    <string name="day_today">Hoy</string>
-    <string name="day_tomorrow">Mañana</string>
-    <string name="day_after_tomorrow">Pasado mañana</string>
     
     <!-- Grid Configuration -->
     <integer name="search_grid_columns_portrait">1</integer>

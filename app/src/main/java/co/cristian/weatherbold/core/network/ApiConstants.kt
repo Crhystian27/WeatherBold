@@ -20,36 +20,10 @@ object ApiConstants {
     const val READ_TIMEOUT = 30L
     const val WRITE_TIMEOUT = 30L
     
-    // Search Config
-    const val MIN_SEARCH_QUERY_LENGTH = 3
-    const val SEARCH_DEBOUNCE_DELAY = 600L
+    // Search Config - Real-time search with instant results
+    const val MIN_SEARCH_QUERY_LENGTH = 1  // Show results from first character
+    const val SEARCH_DEBOUNCE_DELAY = 400L  // 400ms delay to reduce API calls
     
     // Forecast
     const val DEFAULT_FORECAST_DAYS = 3
-    
-    // Country Flags CDN
-    object FlagCdn {
-        const val BASE_URL = "https://flagcdn.com/"
-
-        object Sizes {
-            const val NORMAL = "h80"
-        }
-
-        object Formats {
-            const val WEBP = "webp"
-            const val PNG = "png"
-        }
-
-        /**
-         * Example: buildFlagUrl("CO", "h80") → "https://flagcdn.com/h80/co.webp"
-         * Example: buildFlagUrl("CO", "h80", "png") → "https://flagcdn.com/h80/co.png"
-         */
-        fun buildFlagUrl(
-            isoCode: String, 
-            size: String = Sizes.NORMAL,
-            format: String = Formats.WEBP
-        ): String {
-            return "$BASE_URL$size/${isoCode.lowercase()}.$format"
-        }
-    }
 }

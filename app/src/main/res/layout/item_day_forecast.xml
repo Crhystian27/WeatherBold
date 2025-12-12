@@ -6,14 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/spacing_small"
+    android:layout_marginStart="2dp"
+    android:layout_marginEnd="2dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple_gradient_enhanced"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="2dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:padding="@dimen/spacing_medium">
 
         <ImageView
@@ -21,34 +24,41 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:contentDescription="@string/weather_icon"
-            tools:src="@drawable/ic_search_black_24dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_weather" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/day_name_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/day_condition_text"
+            app:layout_constraintEnd_toStartOf="@id/day_temperature_text"
+            app:layout_constraintStart_toEndOf="@id/day_weather_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Hoy" />
 
-            <TextView
-                android:id="@+id/day_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold"
-                tools:text="Hoy" />
-
-            <TextView
-                android:id="@+id/day_condition_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="@dimen/text_size_small"
-                tools:text="Partly Cloudy" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/day_condition_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:textColor="?android:attr/textColorSecondary"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/day_temperature_text"
+            app:layout_constraintStart_toEndOf="@id/day_weather_icon"
+            app:layout_constraintTop_toBottomOf="@id/day_name_text"
+            tools:text="Partly Cloudy" />
 
         <TextView
             android:id="@+id/day_temperature_text"
@@ -57,8 +67,11 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="12°C" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -14,6 +14,7 @@
         <!-- Background colors -->
         <item name="android:colorBackground">@color/background_dark</item>
         <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_dark</item>
         <item name="colorOnSurface">@color/text_primary_dark</item>
         <item name="colorOnBackground">@color/text_primary_dark</item>
         
@@ -74,5 +75,11 @@
     
     <style name="TextAppearance.WeatherBold.Caption" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">@color/text_secondary_dark</item>
+    </style>
+    
+    <!-- Splash Screen Theme for Dark Mode -->
+    <style name="Theme.WeatherBold.Splash" parent="Theme.WeatherBold.NoActionBar">
+        <item name="android:windowBackground">@color/surface_dark</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 </resources>

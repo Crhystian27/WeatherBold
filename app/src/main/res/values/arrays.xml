@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Progress Indicator Gradient Colors -->
+    <array name="progress_gradient_colors">
+        <item>@color/gradient_start</item>
+        <item>@color/gradient_middle</item>
+        <item>@color/gradient_end</item>
+    </array>
+</resources>

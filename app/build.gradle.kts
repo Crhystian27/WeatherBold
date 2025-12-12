@@ -92,23 +92,32 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         "**/androidx/databinding/*",
         "**/BR.*",
         
-        // Hilt/Dagger generated
-        "**/di/**",
+        // Hilt/Dagger generated (SOLO auto-generados)
         "**/*_Factory.*",
         "**/*_MembersInjector.*",
-        "**/*Module.*",
         "**/*Module\$*.*",
         "**/Hilt_*.*",
         "**/*_HiltModules*.*",
         "**/*_ComponentTreeDeps*.*",
         "**/*_Provide*Factory*.*",
         
+        // DI Modules (no business logic, just configuration)
+        "**/di/**",
+        
         // UI Layer (Fragments, Activities, Adapters) - NO BUSINESS LOGIC
         "**/presentation/ui/**/*Fragment.*",
+        "**/presentation/ui/**/*Fragment\$*.*",
+        "**/presentation/ui/**/*FragmentArgs.*",
+        "**/presentation/ui/**/*FragmentArgs\$*.*",
         "**/presentation/ui/**/*Adapter.*",
-        "**/presentation/ui/**/*Extensions.*",
+        "**/presentation/ui/**/*Adapter\$*.*",
+        "**/presentation/ui/**/*AdapterKt.*",
+        "**/presentation/ui/**/*Directions.*",
+        "**/presentation/ui/**/*Directions\$*.*",
         "**/MainActivity.*",
         "**/MainActivity\$*.*",
+        "**/SplashActivity.*",
+        "**/SplashActivity\$*.*",
         "**/WeatherBoldApplication.*",
         
         // DTOs (Data Transfer Objects - no business logic)
@@ -116,17 +125,11 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         
         // API Interfaces (no logic to test)
         "**/data/remote/api/**",
-        "**/data/remote/datasource/**",
         
-        // Security/Config (tested via integration)
+        // Constants and Security (no logic or tested via integration)
+        "**/core/network/ApiConstants.*",
         "**/core/security/**",
         "**/core/network/ApiKeyInterceptor.*",
-        "**/core/network/NetworkConnectivityManager.*",
-        "**/core/network/NetworkErrorHandler.*",
-        
-        // Constants (no logic)
-        "**/core/network/ApiConstants.*",
-        "**/core/util/UiConstants.*",
         
         // Repository interfaces (no implementation)
         "**/domain/repository/*Repository.*"
@@ -171,9 +174,11 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
 
+    // UI Components
+    implementation(libs.lottie)
+    
     // Image Loading
     implementation(libs.coil)
-    implementation(libs.shimmer)
 
     // Testing
     testImplementation(libs.junit)
@@ -181,6 +186,7 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

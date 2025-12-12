@@ -92,6 +92,49 @@ object TestDtoData {
         moonIllumination = "25"
     )
     
+    fun createHourDto(
+        timeEpoch: Long = 1702296000,
+        time: String = "2025-12-11 10:00",
+        tempCelsius: Double = 12.0,
+        tempFahrenheit: Double = 53.6,
+        isDay: Int = 1,
+        condition: ConditionDto = createConditionDto(),
+        windMph: Double = 2.5,
+        windKph: Double = 4.0,
+        windDegree: Int = 112,
+        windDirection: String = "ESE",
+        pressureMb: Double = 1013.0,
+        pressureIn: Double = 29.91,
+        precipMm: Double = 0.0,
+        precipIn: Double = 0.0,
+        humidity: Int = 100,
+        cloud: Int = 75,
+        feelslikeCelsius: Double = 9.0,
+        feelslikeFahrenheit: Double = 48.2,
+        windchillCelsius: Double = 9.0,
+        windchillFahrenheit: Double = 48.2,
+        heatindexCelsius: Double = 12.0,
+        heatindexFahrenheit: Double = 53.6,
+        dewpointCelsius: Double = 11.0,
+        dewpointFahrenheit: Double = 51.8,
+        willItRain: Int = 0,
+        chanceOfRain: Int = 20,
+        willItSnow: Int = 0,
+        chanceOfSnow: Int = 0,
+        visibilityKm: Double = 10.0,
+        visibilityMiles: Double = 6.0,
+        gustMph: Double = 3.0,
+        gustKph: Double = 5.0,
+        uvIndex: Double = 3.0
+    ) = HourDto(
+        timeEpoch, time, tempCelsius, tempFahrenheit, isDay, condition,
+        windMph, windKph, windDegree, windDirection, pressureMb, pressureIn,
+        precipMm, precipIn, humidity, cloud, feelslikeCelsius, feelslikeFahrenheit,
+        windchillCelsius, windchillFahrenheit, heatindexCelsius, heatindexFahrenheit,
+        dewpointCelsius, dewpointFahrenheit, willItRain, chanceOfRain, willItSnow,
+        chanceOfSnow, visibilityKm, visibilityMiles, gustMph, gustKph, uvIndex
+    )
+    
     fun createForecastDayDto(
         date: String = "2025-12-11",
         dateEpoch: Long = 1702252800
@@ -114,8 +157,6 @@ object TestDtoData {
             )
         )
     )
-    
-    fun createForecastDto() = createForecastResponseDto()
     
     fun createLocationDtoList() = listOf(
         createLocationDto(1, "Bogota", "Bogota D.C.", "Colombia", 4.61, -74.08),

@@ -30,7 +30,7 @@ class WeatherRepositoryImpl @Inject constructor(
         // Check connectivity before request
         if (!networkConnectivityManager.isNetworkAvailable()) {
             emit(NetworkResult.Error(
-                message = "No hay conexión a internet. Por favor, verifica tu conexión.",
+                message = "No internet connection. Please check your connection.",
                 code = null
             ))
             return@flow

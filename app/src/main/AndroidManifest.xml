@@ -15,18 +15,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherBold">
+        
+        <!-- Splash Screen - Launcher Activity -->
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true"
-            android:resizeableActivity="true"
-            android:theme="@style/Theme.WeatherBold.NoActionBar"
-            tools:targetApi="24">
+            android:theme="@style/Theme.WeatherBold.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.WeatherBold.NoActionBar"
+            tools:targetApi="24" />
     </application>
 
 </manifest>

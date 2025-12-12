@@ -14,7 +14,6 @@ import co.cristian.weatherbold.core.util.WeatherFormatter
 import co.cristian.weatherbold.databinding.FragmentWeatherDetailBinding
 import co.cristian.weatherbold.domain.model.WeatherDetail
 import coil.load
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -41,6 +40,7 @@ class WeatherDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
+        setupToolbarTitle()
         setupLocationName()
         setupRecyclerView()
         setupRetryButton()
@@ -50,14 +50,120 @@ class WeatherDetailFragment : Fragment() {
         viewModel.getWeatherDetail(args.locationName)
     }
 
+    private fun setupToolbarTitle() {
+        // Set toolbar title with emoji flag and location name
+        val countryEmoji = getCountryEmoji(args.locationCountry ?: "")
+        val toolbarTitle = "$countryEmoji ${args.locationName}"
+        requireActivity().title = toolbarTitle
+    }
+
     private fun setupLocationName() {
-        // Display location name with country if available
-        val locationDisplay = if (args.locationCountry != null) {
-            "${args.locationName}, ${args.locationCountry}"
-        } else {
-            args.locationName
+        // Display location name with region and country (2 lines)
+        val locationDisplay = buildString {
+            append(args.locationName)
+            
+            if (!args.locationRegion.isNullOrBlank()) {
+                append(", ")
+                append(args.locationRegion)
+            }
+            
+            if (!args.locationCountry.isNullOrBlank()) {
+                append("\n")
+                append(args.locationCountry)
+            }
         }
         binding.locationNameText.text = locationDisplay
+    }
+    
+    /**
+     * Returns country emoji flag based on country name
+     */
+    private fun getCountryEmoji(country: String): String {
+        return when (country.lowercase().trim()) {
+            // Latin America
+            "colombia" -> "🇨🇴"
+            "mexico" -> "🇲🇽"
+            "argentina" -> "🇦🇷"
+            "brazil" -> "🇧🇷"
+            "chile" -> "🇨🇱"
+            "peru" -> "🇵🇪"
+            "venezuela" -> "🇻🇪"
+            "ecuador" -> "🇪🇨"
+            "bolivia" -> "🇧🇴"
+            "paraguay" -> "🇵🇾"
+            "uruguay" -> "🇺🇾"
+            "costa rica" -> "🇨🇷"
+            "panama" -> "🇵🇦"
+            "guatemala" -> "🇬🇹"
+            "honduras" -> "🇭🇳"
+            "el salvador" -> "🇸🇻"
+            "nicaragua" -> "🇳🇮"
+            "cuba" -> "🇨🇺"
+            "dominican republic" -> "🇩🇴"
+            "puerto rico" -> "🇵🇷"
+            
+            // North America
+            "united states", "usa", "united states of america" -> "🇺🇸"
+            "canada" -> "🇨🇦"
+            
+            // Europe
+            "spain", "españa" -> "🇪🇸"
+            "united kingdom", "uk", "england", "scotland", "wales" -> "🇬🇧"
+            "france" -> "🇫🇷"
+            "germany" -> "🇩🇪"
+            "italy" -> "🇮🇹"
+            "portugal" -> "🇵🇹"
+            "netherlands" -> "🇳🇱"
+            "belgium" -> "🇧🇪"
+            "switzerland" -> "🇨🇭"
+            "austria" -> "🇦🇹"
+            "sweden" -> "🇸🇪"
+            "norway" -> "🇳🇴"
+            "denmark" -> "🇩🇰"
+            "finland" -> "🇫🇮"
+            "poland" -> "🇵🇱"
+            "russia", "russian federation" -> "🇷🇺"
+            "greece" -> "🇬🇷"
+            "ireland" -> "🇮🇪"
+            "czech republic", "czechia" -> "🇨🇿"
+            "hungary" -> "🇭🇺"
+            "romania" -> "🇷🇴"
+            "bulgaria" -> "🇧🇬"
+            "croatia" -> "🇭🇷"
+            "ukraine" -> "🇺🇦"
+            
+            // Asia
+            "japan" -> "🇯🇵"
+            "china" -> "🇨🇳"
+            "india" -> "🇮🇳"
+            "south korea", "korea" -> "🇰🇷"
+            "thailand" -> "🇹🇭"
+            "vietnam" -> "🇻🇳"
+            "philippines" -> "🇵🇭"
+            "indonesia" -> "🇮🇩"
+            "malaysia" -> "🇲🇾"
+            "singapore" -> "🇸🇬"
+            "israel" -> "🇮🇱"
+            "turkey" -> "🇹🇷"
+            "saudi arabia" -> "🇸🇦"
+            "united arab emirates", "uae" -> "🇦🇪"
+            "pakistan" -> "🇵🇰"
+            "bangladesh" -> "🇧🇩"
+            
+            // Oceania
+            "australia" -> "🇦🇺"
+            "new zealand" -> "🇳🇿"
+            
+            // Africa
+            "south africa" -> "🇿🇦"
+            "egypt" -> "🇪🇬"
+            "nigeria" -> "🇳🇬"
+            "kenya" -> "🇰🇪"
+            "morocco" -> "🇲🇦"
+            
+            // Default
+            else -> "🌍"
+        }
     }
 
     private fun setupRecyclerView() {
@@ -84,14 +190,18 @@ class WeatherDetailFragment : Fragment() {
     }
 
     private fun showLoading() {
-        binding.shimmerLayout.root.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
         binding.contentContainer.visibility = View.GONE
+        binding.forecastTitle.visibility = View.GONE
+        binding.forecastRecyclerView.visibility = View.GONE
         binding.errorLayout.visibility = View.GONE
     }
 
     private fun showWeatherDetail(detail: WeatherDetail) {
-        binding.shimmerLayout.root.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         binding.contentContainer.visibility = View.VISIBLE
+        binding.forecastTitle.visibility = View.VISIBLE
+        binding.forecastRecyclerView.visibility = View.VISIBLE
         binding.errorLayout.visibility = View.GONE
 
         // Current weather using WeatherFormatter
@@ -104,8 +214,10 @@ class WeatherDetailFragment : Fragment() {
         binding.humidityText.text = WeatherFormatter.formatHumidity(ctx, current.humidity)
         binding.visibilityText.text = WeatherFormatter.formatVisibility(ctx, current.visibilityKm)
 
-        // Load weather icon with Coil (URL already has https: protocol from mapper)
+        // Load weather icon with Coil
         binding.weatherIcon.load(current.conditionIcon) {
+            placeholder(android.R.drawable.ic_menu_gallery)
+            error(android.R.drawable.ic_dialog_alert)
             crossfade(true)
         }
 
@@ -114,12 +226,12 @@ class WeatherDetailFragment : Fragment() {
     }
 
     private fun showError(message: String) {
-        binding.shimmerLayout.root.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         binding.contentContainer.visibility = View.GONE
+        binding.forecastTitle.visibility = View.GONE
+        binding.forecastRecyclerView.visibility = View.GONE
         binding.errorLayout.visibility = View.VISIBLE
         binding.errorMessage.text = message
-        
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     override fun onDestroyView() {

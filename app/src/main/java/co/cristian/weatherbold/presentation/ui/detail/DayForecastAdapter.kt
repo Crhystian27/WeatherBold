@@ -40,6 +40,8 @@ class DayForecastAdapter : ListAdapter<DayForecastWithName, DayForecastAdapter.V
 
                 // Load weather icon with Coil
                 dayWeatherIcon.load(forecast.conditionIcon) {
+                    placeholder(android.R.drawable.ic_menu_gallery)
+                    error(android.R.drawable.ic_dialog_alert)
                     crossfade(true)
                 }
             }

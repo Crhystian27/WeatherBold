@@ -30,6 +30,11 @@
             android:name="locationName"
             app:argType="string" />
         <argument
+            android:name="locationRegion"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
             android:name="locationCountry"
             app:argType="string"
             app:nullable="true"
