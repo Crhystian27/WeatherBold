@@ -24,10 +24,10 @@
     
     <!-- Formato del Clima -->
     <string name="format_temperature">%d°C</string>
-    <string name="format_feels_like">Sensación térmica: %d°C</string>
-    <string name="format_wind" formatted="false">%d km/h %s</string>
-    <string name="format_humidity">%d%%</string>
-    <string name="format_visibility">%d km</string>
+    <string name="format_feels_like">Sensación: %d°C</string>
+    <string name="format_wind" formatted="false">Viento: %d km/h %s</string>
+    <string name="format_humidity">Humedad: %d%%</string>
+    <string name="format_visibility">Visibilidad: %d km</string>
     
     <!-- Nombres de Días -->
     <string name="day_today">Hoy</string>

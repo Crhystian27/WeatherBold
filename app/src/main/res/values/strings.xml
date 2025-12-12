@@ -25,9 +25,9 @@
     <!-- Weather Formatting -->
     <string name="format_temperature">%d°C</string>
     <string name="format_feels_like">Feels like: %d°C</string>
-    <string name="format_wind" formatted="false">%d km/h %s</string>
-    <string name="format_humidity">%d%%</string>
-    <string name="format_visibility">%d km</string>
+    <string name="format_wind" formatted="false">Wind: %d km/h %s</string>
+    <string name="format_humidity">Humidity: %d%%</string>
+    <string name="format_visibility">Visibility: %d km</string>
     
     <!-- Day Names -->
     <string name="day_today">Today</string>
